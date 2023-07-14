@@ -12,7 +12,7 @@ class MyRow extends StatefulWidget {
     this.middleCellWidgetWidth = 5,
     this.height = 30,
     this.minMiddleCellWidth = 10,
-    this.onCheckBoxChanged, 
+    this.onCheckBoxChanged,
     this.textSize = 18,
   });
 
@@ -68,19 +68,18 @@ class _MyRowState extends State<MyRow> {
         : _currentMiddleCellSize!.width;
 
     final middleCellContainer = Container(
-      key: _middleCellKey,
-      decoration: border,
-      height: widget.height,
-      child: Row(
-        children: Iterable.generate(
-                middleCellWidth ~/ widget.middleCellWidgetWidth)
-            .map((e) => SizedBox(
-                  width: widget.middleCellWidgetWidth,
-                  child: widget.middleFill,
-                ))
-            .toList(),
-      ),
-    );
+        key: _middleCellKey,
+        decoration: border,
+        height: widget.height,
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: middleCellWidth ~/ widget.middleCellWidgetWidth,
+          itemBuilder: (BuildContext context, int index) => SizedBox(
+            width: widget.middleCellWidgetWidth,
+            child: widget.middleFill,
+          ),
+        ));
 
     final textCellContainer = Container(
       key: _textCellKey,
@@ -153,6 +152,7 @@ class MainApp extends StatelessWidget {
           child: MyRow(
             middleFill: Icon(Icons.flutter_dash_rounded),
             middleCellWidgetWidth: 20,
+            minMiddleCellWidth: 10,
             text: "Какой-то текст",
           ),
         ),
